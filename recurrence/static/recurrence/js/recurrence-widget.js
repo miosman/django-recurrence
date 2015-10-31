@@ -116,7 +116,7 @@ recurrence.widget.Calendar.prototype = {
             header_grid.cells[i].appendChild(item);
             recurrence.widget.add_class(
                 header_grid.cells[i], item.className);
-            });
+        });
         recurrence.widget.add_class(header_grid.elements.root, 'navigation');
 
         // core
@@ -131,7 +131,7 @@ recurrence.widget.Calendar.prototype = {
         var td = recurrence.widget.e(
             'td', {},
             [remove, calendar_year, calendar_navigation,
-             calendar_body, calendar_footer]);
+                calendar_body, calendar_footer]);
         var tr = recurrence.widget.e('tr', {}, [td]);
         var tbody = recurrence.widget.e('tbody', {}, [tr]);
         var root = recurrence.widget.e(
@@ -382,7 +382,7 @@ recurrence.widget.DateSelector.prototype = {
     set_date: function(datestring) {
         var tokens = datestring.split('-');
         var year = parseInt(tokens[0], 10);
-	var month = parseInt(tokens[1], 10) - 1;
+        var month = parseInt(tokens[1], 10) - 1;
         var day = parseInt(tokens[2], 10);
         var dt = new Date(year, month, day);
 
@@ -400,8 +400,8 @@ recurrence.widget.DateSelector.prototype = {
         } else {
             if (!this.date ||
                 (year != this.date.getFullYear() ||
-                 month != this.date.getMonth() ||
-                 day != this.date.getDate())) {
+                month != this.date.getMonth() ||
+                day != this.date.getDate())) {
 
                 if (!this.date)
                     this.date = recurrence.widget.date_today();
@@ -424,9 +424,9 @@ recurrence.widget.DateSelector.prototype = {
         var calendar_x = loc[0];
         var calendar_y = loc[1];
         var calendar_right = (
-            loc[0] + this.calendar.elements.root.clientWidth);
+        loc[0] + this.calendar.elements.root.clientWidth);
         var calendar_bottom = (
-            loc[1] + this.calendar.elements.root.clientHeight);
+        loc[1] + this.calendar.elements.root.clientHeight);
 
         if (calendar_right > document.scrollWidth)
             calendar_x = calendar_x - (
@@ -485,15 +485,15 @@ recurrence.widget.Widget.prototype = {
 
         var add_rule = new recurrence.widget.AddButton(
             recurrence.display.labels.add_rule, {
-            'onclick': function () {widget.add_rule();}
-        });
+                'onclick': function () {widget.add_rule();}
+            });
         recurrence.widget.add_class(add_rule.elements.root, 'add-rule');
         control.appendChild(add_rule.elements.root);
 
         var add_date = new recurrence.widget.AddButton(
             recurrence.display.labels.add_date, {
-            'onclick': function () {widget.add_date();}
-        });
+                'onclick': function () {widget.add_date();}
+            });
         recurrence.widget.add_class(add_date.elements.root, 'add-date');
         control.appendChild(add_date.elements.root);
 
@@ -648,17 +648,17 @@ recurrence.widget.Panel.prototype = {
             }
         }, '&times;');
         var label = recurrence.widget.e('a', {
-           'class': 'recurrence-label',
-           'href': 'javascript:void(0)',
-           'onclick': function() {
-               if (panel.collapsed)
-                   panel.expand();
-               else
-                   panel.collapse();
-           }
+            'class': 'recurrence-label',
+            'href': 'javascript:void(0)',
+            'onclick': function() {
+                if (panel.collapsed)
+                    panel.expand();
+                else
+                    panel.collapse();
+            }
         }, '&nbsp;');
         var header = recurrence.widget.e(
-             'div', {'class': 'header'}, [remove, label]);
+            'div', {'class': 'header'}, [remove, label]);
         var body = recurrence.widget.e(
             'div', {'class': 'body'});
         var root = recurrence.widget.e(
@@ -725,7 +725,8 @@ recurrence.widget.RuleForm.prototype = {
             new recurrence.Rule(recurrence.YEARLY, rule_options),
             new recurrence.Rule(recurrence.MONTHLY, rule_options),
             new recurrence.Rule(recurrence.WEEKLY, rule_options),
-            new recurrence.Rule(recurrence.DAILY, rule_options)
+            new recurrence.Rule(recurrence.DAILY, rule_options),
+            new recurrence.Rule(recurrence.HOURLY, rule_options)
         ];
         this.freq_rules[this.rule.freq].update(this.rule);
 
@@ -748,7 +749,7 @@ recurrence.widget.RuleForm.prototype = {
             'div', {'class': 'mode'},
             [mode_checkbox, mode_label]);
         if (this.mode == recurrence.widget.EXCLUSION)
-            // delay for ie6 compatibility
+        // delay for ie6 compatibility
             setTimeout(function() {
                 mode_checkbox.checked = true;
                 recurrence.widget.add_class(form.panel, 'exclusion');
@@ -756,7 +757,7 @@ recurrence.widget.RuleForm.prototype = {
 
         // freq
 
-        var freq_choices = recurrence.display.frequencies.slice(0, 4);
+        var freq_choices = recurrence.display.frequencies.slice(0, 5);
         var freq_options = recurrence.array.foreach(
             freq_choices, function(item, i) {
                 var option = recurrence.widget.e(
@@ -777,7 +778,7 @@ recurrence.widget.RuleForm.prototype = {
 
         var interval_field = recurrence.widget.e(
             'input', {
-            'name': 'interval', 'size': 1, 'value': this.rule.interval});
+                'name': 'interval', 'size': 1, 'value': this.rule.interval});
         var interval_label1 = recurrence.widget.e(
             'span', {'class': 'recurrence-label'},
             recurrence.display.labels.every);
@@ -796,7 +797,7 @@ recurrence.widget.RuleForm.prototype = {
             until_value = '';
         var until_radio = recurrence.widget.e(
             'input', {'class': 'radio', 'type': 'radio',
-                      'name': 'until_count', 'value': 'until'});
+                'name': 'until_count', 'value': 'until'});
         var until_date_selector = new recurrence.widget.DateSelector(
             this.rule.until, {
                 'onchange': function(date) {form.set_until(date);},
@@ -953,7 +954,8 @@ recurrence.widget.RuleForm.prototype = {
             recurrence.widget.RuleYearlyForm,
             recurrence.widget.RuleMonthlyForm,
             recurrence.widget.RuleWeeklyForm,
-            recurrence.widget.RuleDailyForm
+            recurrence.widget.RuleDailyForm,
+            recurrence.widget.RuleHourlyForm
         ];
         var freq_forms = recurrence.array.foreach(
             forms, function(form, i) {
@@ -1148,7 +1150,7 @@ recurrence.widget.RuleYearlyForm.prototype = {
         // weekday-position
 
         var position_options = recurrence.array.foreach(
-            [1, 2, 3, 4, -1, -2, -3], function(value) {
+            [1, 2, 3, -1, -2, -3], function(value) {
                 var option = recurrence.widget.e(
                     'option', {'value': value},
                     recurrence.string.strip(recurrence.display.weekdays_position[
@@ -1316,12 +1318,12 @@ recurrence.widget.RuleMonthlyForm.prototype = {
         // weekday-position
 
         var position_options = recurrence.array.foreach(
-            [1, 2, 3, 4, -1, -2, -3], function(value) {
+            [1, 2, 3, -1, -2, -3], function(value) {
                 var option = recurrence.widget.e(
                     'option', {'value': value},
                     recurrence.string.strip(
                         recurrence.display.weekdays_position[
-                        String(value)].split('%(weekday)s')[0]));
+                            String(value)].split('%(weekday)s')[0]));
                 return option;
             });
         var position_select = recurrence.widget.e(
@@ -1548,6 +1550,74 @@ recurrence.widget.RuleDailyForm.prototype = {
     }
 };
 
+
+recurrence.widget.RuleHourlyForm = function(panel, rule) {
+    this.init(panel, rule);
+};
+recurrence.widget.RuleHourlyForm.prototype = {
+    init: function(panel, rule) {
+        this.panel = panel;
+        this.rule = rule;
+
+        this.init_dom();
+    },
+
+    init_dom: function() {
+        var form = this;
+
+        var grid = new recurrence.widget.Grid(8, 3);
+
+        var work_hours = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+        var number = -1;
+        for (var y=0; y < 3; y++) {
+            for (var x=0; x < 8; x++) {
+                number += 1;
+                var cell = grid.cell(x, y);
+
+                cell.value = number;
+                cell.innerHTML = number;
+                if (work_hours.indexOf(number) !== -1)
+                    recurrence.widget.add_class(cell, 'active');
+                cell.onclick = function () {
+                    var hour = parseInt(this.innerHTML, 10) || null;
+                    if (recurrence.widget.has_class(this, 'active'))
+                        recurrence.widget.remove_class(this, 'active');
+                    else
+                        recurrence.widget.add_class(this, 'active');
+                    form.set_fromhour();
+                }
+            }
+        }
+
+        var hourly_container = recurrence.widget.e(
+            'div', {'class': 'section'});
+        hourly_container.appendChild(grid.elements.root);
+
+        var root = recurrence.widget.e('div', {'class': 'hourly'}, [hourly_container]);
+        root.style.display = 'none';
+        this.elements = {'root': root, 'grid': grid};
+        form.set_fromhour();
+    },
+
+    set_fromhour: function() {
+        var by_hour = [];
+        recurrence.array.foreach(
+            this.elements.grid.cells, function(cell) {
+                if (recurrence.widget.has_class(cell, 'active'))
+                    by_hour.push(cell.value);
+            });
+        this.rule.byhour = by_hour;
+        this.panel.update();
+    },
+
+    show: function() {
+        this.elements.root.style.display = '';
+    },
+
+    hide: function() {
+        this.elements.root.style.display = 'none';
+    }
+};
 
 recurrence.widget.DateForm = function(panel, mode, date) {
     this.init(panel, mode, date);
